@@ -18,6 +18,6 @@
         <property name="hibernate.use_sql_comments">false</property>
 
 
-        <mapping class="org.example.User"/>
+        <mapping class="org.example.entity.User"/>
     </session-factory>
 </hibernate-configuration>

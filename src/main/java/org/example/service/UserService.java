@@ -1,45 +1,18 @@
-package org.example;
+package org.example.service;
+
+import org.example.entity.User;
+import org.example.dao.UserDao;
+import org.example.dao.UserDaoReal;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
-    private static final UserDao userDao = new UserDaoReal();
-    private static final Scanner scanner = new Scanner(System.in);
+public class UserService {
 
-    public static void main(String[] args) {
-        HibernateUtil.getSessionFactory();
-        while (true) {
-            printMenu();
-            String choice = scanner.nextLine();
+    private final UserDao userDao = new UserDaoReal();
+    private final Scanner scanner = new Scanner(System.in);
 
-            switch (choice) {
-                case "1" -> createUser();
-                case "2" -> viewUserById();
-                case "3" -> viewAllUsers();
-                case "4" -> updateUser();
-                case "5" -> deleteUser();
-                case "0" -> {
-                    System.out.println("Выход...");
-                    return;
-                }
-                default -> System.out.println("Неверный выбор. Попробуйте снова.");
-            }
-        }
-    }
-
-    private static void printMenu() {
-        System.out.println("\n=== User Service Menu ===");
-        System.out.println("1. Создать пользователя");
-        System.out.println("2. Посмотреть пользователя по ID");
-        System.out.println("3. Посмотреть всех пользователей");
-        System.out.println("4. Обновить пользователя");
-        System.out.println("5. Удалить пользователя");
-        System.out.println("0. Выход");
-        System.out.print("Выберите действие: ");
-    }
-
-    private static void createUser() {
+    public void createUser() {
         User user = new User();
         System.out.print("Имя: ");
         user.setName(scanner.nextLine());
@@ -50,7 +23,7 @@ public class Main {
         userDao.create(user);
     }
 
-    private static void viewUserById() {
+    public void viewUserById() {
         System.out.print("Введите ID: ");
         Long id = Long.parseLong(scanner.nextLine());
         User user = userDao.readById(id);
@@ -63,7 +36,7 @@ public class Main {
         }
     }
 
-    private static void viewAllUsers() {
+    public void viewAllUsers() {
         List<User> users = userDao.readAll();
         if (users.isEmpty()) {
             System.out.println("Нет пользователей.");
@@ -74,7 +47,7 @@ public class Main {
         }
     }
 
-    private static void updateUser() {
+    public void updateUser() {
         System.out.print("Введите ID пользователя для обновления: ");
         Long id = Long.parseLong(scanner.nextLine());
         User user = userDao.readById(id);
@@ -98,7 +71,7 @@ public class Main {
         userDao.update(user);
     }
 
-    private static void deleteUser() {
+    public void deleteUser() {
         System.out.print("Введите ID пользователя для удаления: ");
         Long id = Long.parseLong(scanner.nextLine());
         userDao.delete(id);

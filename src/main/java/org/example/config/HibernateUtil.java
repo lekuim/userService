@@ -2,7 +2,7 @@ package org.example.config;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-
+import java.util.Properties;
 public class HibernateUtil {
 
     private static SessionFactory sessionFactory;
@@ -17,5 +17,16 @@ public class HibernateUtil {
             }
         }
         return sessionFactory;
+    }
+
+    public static void overrideConfiguration(Properties properties) {
+        try {
+            Configuration configuration = new Configuration();
+            configuration.addAnnotatedClass(org.example.entity.User.class);
+            configuration.addProperties(properties);
+            sessionFactory = configuration.buildSessionFactory();
+        } catch (Exception e) {
+            throw new RuntimeException("Не удалось переопределить Hibernate конфигурацию", e);
+        }
     }
 }

@@ -9,9 +9,18 @@ import java.util.Scanner;
 
 public class UserService {
 
-    private final UserDao userDao = new UserDaoReal();
-    private final Scanner scanner = new Scanner(System.in);
+    private final UserDao userDao;
+    private final Scanner scanner;
 
+    public UserService() {
+        this.userDao = new UserDaoReal();
+        this.scanner = new Scanner(System.in);
+    }
+
+    public UserService(UserDao userDao, Scanner scanner) {
+        this.userDao = userDao;
+        this.scanner = scanner;
+    }
     public void createUser() {
         User user = new User();
         System.out.print("Имя: ");
